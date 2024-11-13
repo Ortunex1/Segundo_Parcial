@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Encabezado con los datos del usuario en un recuadro -->
+    <div class="header">
+        <div class="user-info">
+            <h2>Datos del Usuario</h2>
+            <p>Segundo Parcial </p>
+            <p>Nombre: Jose Manuel Ortuño Alanoca</p>
+            <p>Ci: 1106370</p>
+            <p>Ru: 200059754</p>
+            <p>Materia: Tecnologias Emergentes II -TEM-742 </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>Gestión de productos</h1>
+        <table class="product-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Fecha de Vencimiento</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.id }}</td>
+                    <td>{{ product.nombre }}</td>
+                    <td>{{ product.cantidad }}</td>
+                    <td>{{ product.precio }}</td>
+                    <td>{{ product.fecha_vencimiento }}</td>
+                    <td>{{ product.categoria }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn edit-btn">Editar</a>
+                        <a href="{{ url_for('delete_product', product_id=product.id) }}" class="btn delete-btn">Eliminar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Nuevo producto</h2>
+        <form action="{{ url_for('add_product') }}" method="POST" class="product-form">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" required><br>
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" required><br>
+            <label for="precio">Precio:</label>
+            <input type="number" step="0.01" name="precio" required><br>
+            <label for="fecha_vencimiento">Fecha de vencimiento:</label>
+            <input type="date" name="fecha_vencimiento" required><br>
+            <label for="categoria">Categoría:</label>
+            <input type="text" name="categoria" required><br>
+            <button type="submit" class="btn add-btn">Agregar Producto</button>
+        </form>
+    </div>
+</body>
+</html>
